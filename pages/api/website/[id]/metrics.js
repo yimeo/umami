@@ -41,7 +41,22 @@ export default async (req, res) => {
       return unauthorized(res);
     }
 
-    const { id, type, start_at, end_at, url, referrer, os, browser, device, country } = req.query;
+    const { id, type, start_at, end_at, url, referrer, os, browser, device, country, hostname } =
+      req.query;
+
+    if (
+      hostname !== undefined &&
+      (typeof hostname !== 'string' ||
+        hostname.length === 0 ||
+        hostname.length > 255 ||
+        /['"\\]/.test(hostname) ||
+        [...hostname].some(character => {
+          const code = character.charCodeAt(0);
+          return code < 32 || code === 127;
+        }))
+    ) {
+      return badRequest(res);
+    }
 
     const websiteId = +id;
     const startDate = new Date(+start_at);
@@ -53,6 +68,7 @@ export default async (req, res) => {
         browser,
         device,
         country,
+        hostname,
       });
 
       if (type === 'language') {

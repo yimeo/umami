@@ -20,6 +20,7 @@ import EventsTable from 'components/metrics/EventsTable';
 import EventsChart from 'components/metrics/EventsChart';
 import ScreenTable from 'components/metrics/ScreenTable';
 import QueryParametersTable from 'components/metrics/QueryParametersTable';
+import { DomainTrafficTable, PageTrafficTable } from 'components/metrics/TrafficTable';
 import useFetch from 'hooks/useFetch';
 import usePageQuery from 'hooks/usePageQuery';
 import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
@@ -27,6 +28,8 @@ import styles from './WebsiteDetails.module.css';
 
 const messages = defineMessages({
   pages: { id: 'metrics.pages', defaultMessage: 'Pages' },
+  visitedDomains: { id: 'metrics.visited-domains', defaultMessage: 'Visited domains' },
+  visitedPages: { id: 'metrics.visited-pages', defaultMessage: 'Visited pages' },
   referrers: { id: 'metrics.referrers', defaultMessage: 'Referrers' },
   screens: { id: 'metrics.screens', defaultMessage: 'Screens' },
   browsers: { id: 'metrics.browsers', defaultMessage: 'Browsers' },
@@ -49,6 +52,8 @@ const views = {
   language: LanguagesTable,
   event: EventsTable,
   query: QueryParametersTable,
+  domain: DomainTrafficTable,
+  'visited-pages': PageTrafficTable,
 };
 
 export default function WebsiteDetails({ websiteId }) {
@@ -58,7 +63,7 @@ export default function WebsiteDetails({ websiteId }) {
   const [eventsData, setEventsData] = useState();
   const {
     resolve,
-    query: { view },
+    query: { view, domain },
   } = usePageQuery();
   const { formatMessage } = useIntl();
 
@@ -73,6 +78,14 @@ export default function WebsiteDetails({ websiteId }) {
   const menuOptions = [
     {
       render: BackButton,
+    },
+    {
+      label: formatMessage(messages.visitedDomains),
+      value: resolve({ view: 'domain' }),
+    },
+    {
+      label: formatMessage(messages.visitedPages),
+      value: resolve({ view: 'visited-pages' }),
     },
     {
       label: formatMessage(messages.pages),
@@ -153,6 +166,14 @@ export default function WebsiteDetails({ websiteId }) {
         <GridLayout>
           <GridRow>
             <GridColumn md={12} lg={6}>
+              <DomainTrafficTable {...tableProps} />
+            </GridColumn>
+            <GridColumn md={12} lg={6}>
+              <PageTrafficTable {...tableProps} />
+            </GridColumn>
+          </GridRow>
+          <GridRow>
+            <GridColumn md={12} lg={6}>
               <PagesTable {...tableProps} />
             </GridColumn>
             <GridColumn md={12} lg={6}>
@@ -195,16 +216,56 @@ export default function WebsiteDetails({ websiteId }) {
           contentClassName={styles.content}
           menu={menuOptions}
         >
-          <DetailsComponent
-            {...tableProps}
-            height={500}
-            limit={false}
-            animte={false}
-            showFilters
-            virtualize
-          />
+          {view === 'visited-pages' && domain ? (
+            <DomainTrafficDetails websiteId={websiteId} domain={domain} />
+          ) : (
+            <DetailsComponent
+              {...tableProps}
+              height={500}
+              limit={false}
+              animte={false}
+              showFilters
+              virtualize
+            />
+          )}
         </MenuLayout>
       )}
     </Page>
+  );
+}
+
+function DomainTrafficDetails({ websiteId, domain }) {
+  const dimensionProps = {
+    websiteId,
+    height: 320,
+    limit: false,
+    animate: false,
+    virtualize: true,
+    showFilters: false,
+  };
+
+  return (
+    <div className={styles.domainDetails}>
+      <div className={styles.domainTitle}>{domain}</div>
+      <GridLayout>
+        <GridRow>
+          <GridColumn md={12} lg={6}>
+            <BrowsersTable {...dimensionProps} />
+          </GridColumn>
+          <GridColumn md={12} lg={6}>
+            <OSTable {...dimensionProps} />
+          </GridColumn>
+        </GridRow>
+        <GridRow>
+          <GridColumn md={12} lg={6}>
+            <DevicesTable {...dimensionProps} />
+          </GridColumn>
+          <GridColumn md={12} lg={6}>
+            <CountriesTable {...dimensionProps} />
+          </GridColumn>
+        </GridRow>
+      </GridLayout>
+      <PageTrafficTable websiteId={websiteId} limit={false} />
+    </div>
   );
 }

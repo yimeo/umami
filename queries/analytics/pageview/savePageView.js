@@ -14,7 +14,7 @@ export async function savePageView(...args) {
   });
 }
 
-async function relationalQuery(website_id, { session_id, url, referrer }) {
+async function relationalQuery(website_id, { session_id, url, referrer, ip_hash }) {
   return runQuery(
     prisma.pageview.create({
       data: {
@@ -22,6 +22,7 @@ async function relationalQuery(website_id, { session_id, url, referrer }) {
         session_id,
         url: url?.substr(0, URL_LENGTH),
         referrer: referrer?.substr(0, URL_LENGTH),
+        ip_hash,
       },
     }),
   );

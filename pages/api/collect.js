@@ -3,7 +3,7 @@ import isbot from 'isbot';
 import ipaddr from 'ipaddr.js';
 import { savePageView, saveEvent } from 'queries';
 import { useCors, useSession } from 'lib/middleware';
-import { getJsonBody, getIpAddress } from 'lib/request';
+import { getJsonBody, getIpAddress, hashIpAddress } from 'lib/request';
 import { ok, send, badRequest, forbidden } from 'lib/response';
 import { createToken } from 'lib/crypto';
 import { removeTrailingSlash } from 'lib/url';
@@ -72,7 +72,13 @@ export default async (req, res) => {
   }
 
   if (type === 'pageview') {
-    await savePageView(website_id, { session_id, session_uuid, url, referrer });
+    await savePageView(website_id, {
+      session_id,
+      session_uuid,
+      url,
+      referrer,
+      ip_hash: hashIpAddress(getIpAddress(req)),
+    });
   } else if (type === 'event') {
     await saveEvent(website_id, { session_id, session_uuid, url, event_name, event_data });
   } else {

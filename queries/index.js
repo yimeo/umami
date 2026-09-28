@@ -17,6 +17,7 @@ import { getEventMetrics } from './analytics/event/getEventMetrics';
 import { getEvents } from './analytics/event/getEvents';
 import { saveEvent } from './analytics/event/saveEvent';
 import { getPageviewMetrics } from './analytics/pageview/getPageviewMetrics';
+import { getTrafficMetrics } from './analytics/pageview/getTrafficMetrics';
 import { getPageviewParams } from './analytics/pageview/getPageviewParams';
 import { getPageviews } from './analytics/pageview/getPageviews';
 import { getPageviewStats } from './analytics/pageview/getPageviewStats';
@@ -49,6 +50,7 @@ export {
   getEvents,
   saveEvent,
   getPageviewMetrics,
+  getTrafficMetrics,
   getPageviewParams,
   getPageviews,
   getPageviewStats,

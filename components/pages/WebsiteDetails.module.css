@@ -15,6 +15,19 @@
   padding: 20px 0;
 }
 
+.domainDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.domainTitle {
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-large);
+  font-weight: 600;
+}
+
 .backButton {
   display: flex;
   justify-content: center;

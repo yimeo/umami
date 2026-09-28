@@ -367,6 +367,30 @@
       "value": "Today"
     }
   ],
+  "label.yesterday": [
+    {
+      "type": 0,
+      "value": "Yesterday"
+    }
+  ],
+  "metrics.all-pages": [
+    {
+      "type": 0,
+      "value": "All pages"
+    }
+  ],
+  "metrics.show-full-url": [
+    {
+      "type": 0,
+      "value": "Show full URL"
+    }
+  ],
+  "metrics.hide-full-url": [
+    {
+      "type": 0,
+      "value": "Hide full URL"
+    }
+  ],
   "label.tracking-code": [
     {
       "type": 0,
@@ -765,6 +789,48 @@
     {
       "type": 0,
       "value": "Pages"
+    }
+  ],
+  "metrics.domain": [
+    {
+      "type": 0,
+      "value": "Domain"
+    }
+  ],
+  "metrics.page-url": [
+    {
+      "type": 0,
+      "value": "Page URL"
+    }
+  ],
+  "metrics.unique-ips": [
+    {
+      "type": 0,
+      "value": "Unique IPs"
+    }
+  ],
+  "metrics.visited-domains": [
+    {
+      "type": 0,
+      "value": "Visited domains"
+    }
+  ],
+  "metrics.visited-pages": [
+    {
+      "type": 0,
+      "value": "Visited pages"
+    }
+  ],
+  "metrics.ip-privacy-note": [
+    {
+      "type": 0,
+      "value": "IP addresses are only counted using a one-way hash. Historical IP counts are unavailable."
+    }
+  ],
+  "metrics.pageview-share": [
+    {
+      "type": 0,
+      "value": "Share of pageviews"
     }
   ],
   "metrics.query-parameters": [

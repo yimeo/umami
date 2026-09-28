@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import Loading from 'components/common/Loading';
@@ -6,13 +6,17 @@ import ErrorMessage from 'components/common/ErrorMessage';
 import useFetch from 'hooks/useFetch';
 import useDateRange from 'hooks/useDateRange';
 import usePageQuery from 'hooks/usePageQuery';
+import useLocale from 'hooks/useLocale';
 import { formatShortTime, formatNumber, formatLongNumber } from 'lib/format';
+import { getDateRange } from 'lib/date';
 import MetricCard from './MetricCard';
 import styles from './MetricsBar.module.css';
 
 export default function MetricsBar({ websiteId, className }) {
   const [dateRange] = useDateRange(websiteId);
   const { startDate, endDate, modified } = dateRange;
+  const { locale } = useLocale();
+  const yesterdayRange = useMemo(() => getDateRange('yesterday', locale), [locale]);
   const [format, setFormat] = useState(true);
   const {
     query: { url, referrer, os, browser, device, country },
@@ -33,6 +37,23 @@ export default function MetricsBar({ websiteId, className }) {
       },
     },
     [modified, url, referrer, os, browser, device, country],
+  );
+
+  const { data: yesterdayData } = useFetch(
+    `/website/${websiteId}/stats`,
+    {
+      params: {
+        start_at: +yesterdayRange.startDate,
+        end_at: +yesterdayRange.endDate,
+        url,
+        referrer,
+        os,
+        browser,
+        device,
+        country,
+      },
+    },
+    [yesterdayRange.startDate, yesterdayRange.endDate, url, referrer, os, browser, device, country],
   );
 
   const formatFunc = format
@@ -63,12 +84,16 @@ export default function MetricsBar({ websiteId, className }) {
             value={pageviews.value}
             change={pageviews.change}
             format={formatFunc}
+            previousValue={yesterdayData?.pageviews?.value}
+            previousLabel={<FormattedMessage id="label.yesterday" defaultMessage="Yesterday" />}
           />
           <MetricCard
             label={<FormattedMessage id="metrics.visitors" defaultMessage="Visitors" />}
             value={uniques.value}
             change={uniques.change}
             format={formatFunc}
+            previousValue={yesterdayData?.uniques?.value}
+            previousLabel={<FormattedMessage id="label.yesterday" defaultMessage="Yesterday" />}
           />
           <MetricCard
             label={<FormattedMessage id="metrics.bounce-rate" defaultMessage="Bounce rate" />}

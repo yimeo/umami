@@ -367,6 +367,30 @@
       "value": "今天"
     }
   ],
+  "label.yesterday": [
+    {
+      "type": 0,
+      "value": "昨天"
+    }
+  ],
+  "metrics.all-pages": [
+    {
+      "type": 0,
+      "value": "全部网页"
+    }
+  ],
+  "metrics.show-full-url": [
+    {
+      "type": 0,
+      "value": "点击查看完整 URL"
+    }
+  ],
+  "metrics.hide-full-url": [
+    {
+      "type": 0,
+      "value": "收起完整 URL"
+    }
+  ],
   "label.tracking-code": [
     {
       "type": 0,
@@ -753,6 +777,48 @@
     {
       "type": 0,
       "value": "网页"
+    }
+  ],
+  "metrics.domain": [
+    {
+      "type": 0,
+      "value": "域名"
+    }
+  ],
+  "metrics.page-url": [
+    {
+      "type": 0,
+      "value": "网页地址"
+    }
+  ],
+  "metrics.unique-ips": [
+    {
+      "type": 0,
+      "value": "独立 IP 数"
+    }
+  ],
+  "metrics.visited-domains": [
+    {
+      "type": 0,
+      "value": "受访域名"
+    }
+  ],
+  "metrics.visited-pages": [
+    {
+      "type": 0,
+      "value": "受访网页"
+    }
+  ],
+  "metrics.ip-privacy-note": [
+    {
+      "type": 0,
+      "value": "IP 仅按不可逆摘要去重计数；功能启用前的历史 IP 数无法回填。"
+    }
+  ],
+  "metrics.pageview-share": [
+    {
+      "type": 0,
+      "value": "PV 占比"
     }
   ],
   "metrics.query-parameters": [

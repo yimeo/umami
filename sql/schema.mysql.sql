@@ -35,12 +35,14 @@ CREATE TABLE `pageview` (
     `created_at` TIMESTAMP(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
     `url` VARCHAR(500) NOT NULL,
     `referrer` VARCHAR(500) NULL,
+    `ip_hash` VARCHAR(64) NULL,
 
     INDEX `pageview_created_at_idx`(`created_at`),
     INDEX `pageview_session_id_idx`(`session_id`),
     INDEX `pageview_website_id_created_at_idx`(`website_id`, `created_at`),
     INDEX `pageview_website_id_idx`(`website_id`),
     INDEX `pageview_website_id_session_id_created_at_idx`(`website_id`, `session_id`, `created_at`),
+    INDEX `pageview_ip_hash_idx`(`ip_hash`),
     PRIMARY KEY (`view_id`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

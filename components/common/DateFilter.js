@@ -13,6 +13,10 @@ import Icon from './Icon';
 export const filterOptions = [
   { label: <FormattedMessage id="label.today" defaultMessage="Today" />, value: '1day' },
   {
+    label: <FormattedMessage id="label.yesterday" defaultMessage="Yesterday" />,
+    value: 'yesterday',
+  },
+  {
     label: (
       <FormattedMessage id="label.last-hours" defaultMessage="Last {x} hours" values={{ x: 24 }} />
     ),

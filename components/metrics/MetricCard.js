@@ -7,6 +7,8 @@ const MetricCard = ({
   value = 0,
   change = 0,
   label,
+  previousValue,
+  previousLabel,
   reverseColors = false,
   format = formatNumber,
   hideComparison = false,
@@ -16,6 +18,13 @@ const MetricCard = ({
 
   return (
     <div className={styles.card}>
+      <div className={styles.previous}>
+        {previousValue !== undefined && previousLabel && (
+          <>
+            {previousLabel} {format(previousValue)}
+          </>
+        )}
+      </div>
       <animated.div className={styles.value}>{props.x.interpolate(x => format(x))}</animated.div>
       <div className={styles.label}>
         {label}

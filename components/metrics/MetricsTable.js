@@ -29,7 +29,7 @@ export default function MetricsTable({
   const {
     resolve,
     router,
-    query: { url, referrer, os, browser, device, country },
+    query: { url, referrer, os, browser, device, country, domain },
   } = usePageQuery();
 
   const { data, loading, error } = useFetch(
@@ -45,11 +45,12 @@ export default function MetricsTable({
         browser,
         device,
         country,
+        hostname: domain,
       },
       onDataLoad,
       delay: delay || DEFAULT_ANIMATION_DURATION,
     },
-    [type, modified, url, referrer, os, browser, device, country],
+    [type, modified, url, referrer, os, browser, device, country, domain],
   );
 
   const filteredData = useMemo(() => {

@@ -17,7 +17,7 @@ function RefreshButton({ websiteId }) {
   function handleClick() {
     if (!loading && dateRange) {
       setLoading(true);
-      if (/^[\d]+/.test(dateRange.value)) {
+      if (/^[\d]+/.test(dateRange.value) || dateRange.value === 'yesterday') {
         setDateRange(websiteId, dateRange.value);
       } else {
         setDateRange(websiteId, dateRange);

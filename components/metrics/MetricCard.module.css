@@ -5,6 +5,15 @@
   min-width: 140px;
 }
 
+.previous {
+  min-height: 16px;
+  margin-bottom: 2px;
+  color: var(--gray600);
+  font-size: var(--font-size-xsmall);
+  line-height: 16px;
+  white-space: nowrap;
+}
+
 .value {
   font-size: var(--font-size-xlarge);
   line-height: 40px;

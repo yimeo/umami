@@ -31,6 +31,7 @@ CREATE TABLE "pageview" (
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "url" VARCHAR(500) NOT NULL,
     "referrer" VARCHAR(500),
+    "ip_hash" VARCHAR(64),
 
     PRIMARY KEY ("view_id")
 );
@@ -91,6 +92,9 @@ CREATE INDEX "pageview_website_id_idx" ON "pageview"("website_id");
 
 -- CreateIndex
 CREATE INDEX "pageview_website_id_session_id_created_at_idx" ON "pageview"("website_id", "session_id", "created_at");
+
+-- CreateIndex
+CREATE INDEX "pageview_ip_hash_idx" ON "pageview"("ip_hash");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "session.session_uuid_unique" ON "session"("session_uuid");
