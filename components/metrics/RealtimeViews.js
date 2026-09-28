@@ -131,7 +131,9 @@ export default function RealtimeViews({ websiteId, data, websites = [] }) {
 
       pageviews.forEach(pageview => {
         const hostname =
-          hostnameBySession.get(pageview.session_id) || websiteDomainById.get(pageview.website_id);
+          pageview.hostname ||
+          hostnameBySession.get(pageview.session_id) ||
+          websiteDomainById.get(pageview.website_id);
         if (!hostname) {
           return;
         }

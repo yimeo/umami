@@ -27,6 +27,13 @@ async function relationalQuery(websites, start_at) {
           gte: start_at,
         },
       },
+      include: {
+        session: {
+          select: {
+            hostname: true,
+          },
+        },
+      },
     }),
   );
 }

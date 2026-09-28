@@ -10,9 +10,10 @@ export async function getRealtimeData(websites, time) {
   ]);
 
   return {
-    pageviews: pageviews.map(({ view_id, ...props }) => ({
+    pageviews: pageviews.map(({ view_id, session, hostname, ...props }) => ({
       __id: `p${view_id}`,
       view_id,
+      hostname: session?.hostname || hostname,
       ...props,
     })),
     sessions: sessions.map(({ session_id, ...props }) => ({

@@ -50,6 +50,15 @@ export default function RealtimeLog({ data, websites, websiteId }) {
     }, {});
   }, [data]);
 
+  const hostnames = useMemo(() => {
+    return data.sessions.reduce((obj, { session_id, hostname }) => {
+      if (hostname) {
+        obj[session_id] = hostname;
+      }
+      return obj;
+    }, {});
+  }, [data.sessions]);
+
   const buttons = [
     {
       label: <FormattedMessage id="label.all" defaultMessage="All" />,
@@ -95,6 +104,7 @@ export default function RealtimeLog({ data, websites, websiteId }) {
     view_id,
     session_id,
     url,
+    hostname,
     browser,
     os,
     country,
@@ -105,15 +115,20 @@ export default function RealtimeLog({ data, websites, websiteId }) {
       return <div>{event_name}</div>;
     }
     if (view_id) {
-      const domain = getWebsite({ website_id })?.domain;
+      const domain = hostname || hostnames[session_id] || getWebsite({ website_id })?.domain;
+      const pageUrl = url?.startsWith('/') ? url : `/${url || ''}`;
+      const normalizedDomain = domain?.replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+      const fullUrl = normalizedDomain ? `http://${normalizedDomain}${pageUrl}` : pageUrl;
       return (
         <a
           className={styles.link}
-          href={`//${domain}${url}`}
+          href={fullUrl}
+          title={fullUrl}
+          aria-label={fullUrl}
           target="_blank"
           rel="noreferrer noopener"
         >
-          {url}
+          {fullUrl}
         </a>
       );
     }
